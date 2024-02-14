@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class HelloController {
-    @FXML //hello boi
+    @FXML //hello boi //git finally working
     private Label welcomeText;
 
     @FXML
