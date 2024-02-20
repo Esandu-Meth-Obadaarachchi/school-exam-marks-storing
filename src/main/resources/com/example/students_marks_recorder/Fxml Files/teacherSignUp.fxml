@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.text.Text?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.students_marks_recorder.HelloController">
+   <children>
+       <Ellipse fx:id="ellipseOne" layoutX="260.0" layoutY="788.0" radiusX="323.0" radiusY="130.0" stroke="BLACK" strokeType="INSIDE" />
+       <Ellipse fx:id="ellipseTwo" layoutX="886.0" layoutY="1011.0" radiusX="540.0" radiusY="424.0" stroke="BLACK" strokeType="INSIDE" />
+       <AnchorPane layoutX="87.0" layoutY="149.0" prefHeight="420.0" prefWidth="377.0">
+           <children>
+               <ImageView fitHeight="187.0" fitWidth="190.0" layoutX="121.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/1.png" />
+                   </image>
+               </ImageView>
+               <ImageView fitHeight="152.0" fitWidth="159.0" layoutX="233.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/4.png" />
+                   </image>
+               </ImageView>
+               <ImageView fitHeight="223.0" fitWidth="211.0" layoutX="211.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/5.png" />
+                   </image>
+               </ImageView>
+               <ImageView fitHeight="223.0" fitWidth="176.0" layoutX="-3.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/7.png" />
+                   </image>
+               </ImageView>
+               <ImageView fitHeight="150.0" fitWidth="200.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/8.png" />
+                   </image>
+               </ImageView>
+           </children>
+       </AnchorPane>
+      <AnchorPane fx:id="content" layoutX="501.0" layoutY="87.0" prefHeight="458.0" prefWidth="381.0">
+         <children>
+            <Text fx:id="titleText" layoutX="36.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register to SCMS" textAlignment="CENTER" wrappingWidth="299.18603515625">
+      </Text>
+            <Text fx:id="1" layoutX="61.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name:" />
+            <TextField fx:id="stdFirstNameTextField" layoutX="139.0" layoutY="213.0" promptText="Your Name" />
+            <TextField fx:id="stdLastNameTextField" layoutX="139.0" layoutY="256.0" promptText="Your Last Name" />
+            <Text fx:id="2" layoutX="64.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name:" />
+            <Text fx:id="4" layoutX="63.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+            <TextField fx:id="stdPasswordTextField" layoutX="141.0" layoutY="315.0" />
+            <Button fx:id="requestToJoinButton" layoutX="142.0" layoutY="391.0" mnemonicParsing="false" onAction="#onRequestToJoinButtonClick" prefHeight="31.0" prefWidth="73.0" text="Join" />
+            <Text fx:id="5" layoutX="64.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher ID:" />
+            <TextField fx:id="TeacherIdTextField" layoutX="141.0" layoutY="125.0" promptText="Teacher ID" />
+            <Text fx:id="TidErrorText" layoutX="143.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="71.51904296875" />
+            <Text fx:id="pwErrorText" layoutX="142.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="144.0" />
+            <Text fx:id="dOBErrorText" layoutX="143.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="160.0" />
+            <Text fx:id="lNameErrorText" layoutX="140.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="180.0" />
+            <Text fx:id="fNameErrorText" layoutX="140.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="122.0" />
+            <Text fx:id="6" layoutX="63.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject: " />
+            <TextField fx:id="stdIdTextField" layoutX="139.0" layoutY="169.0" promptText="Subjects" />
+            <Text fx:id="idErrorText" layoutX="139.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="138.0" />
+            <Button fx:id="backButton" layoutX="15.0" layoutY="16.0" mnemonicParsing="false" onAction="#backToLoginPage" prefHeight="25.0" prefWidth="43.0" text="&lt;==" />
+         </children>
+      </AnchorPane>
+   </children>
+   <stylesheets>
+      <URL value="@../styling sheets/ClubAdvisorSignUp.css" />
+      <URL value="@../styling sheets/rootStyles.css" />
+   </stylesheets>
+</fx:root>
