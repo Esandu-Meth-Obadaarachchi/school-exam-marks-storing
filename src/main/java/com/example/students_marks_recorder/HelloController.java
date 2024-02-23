@@ -133,20 +133,20 @@ public class HelloController {
     String subjects ;
     ArrayList<Subject> subjectsNeeded = new ArrayList<>();
     String teacherID;
-    String advisorFName;
-    String advisorLName;
-    String stdPassword;
+    String teacherFName;
+    String teacherLName;
+    String teacherPassword;
     String fileName;
     Stage stage;
+    //==========================================================================================
     public boolean isInputNotNull(String input){
         if ( input== null || input.equals("")){
             return false;
         }
         return true;
     }
-
-
-    public boolean advisorInputValidator() throws Exception {
+    //==========================================================================================
+    public boolean teacherInputValidator() throws Exception {
         if (!isInputNotNull(teacherID)){
             TidErrorText.setText("pls enter the Teacher Id");
             return false;
@@ -155,30 +155,30 @@ public class HelloController {
             idErrorText.setText("pls enter the subjects");
             return false;
         }
-        if (!isInputNotNull(advisorFName)){
+        if (!isInputNotNull(teacherFName)){
             fNameErrorText.setText("pls enter the First name");
             return false;
         }
-        if (!isInputNotNull(advisorLName)){
+        if (!isInputNotNull(teacherLName)){
             lNameErrorText.setText("pls enter the Last name");
             return false;
         }
-        if (!isInputNotNull(stdPassword)){
+        if (!isInputNotNull(teacherPassword)){
             TidErrorText.setText("pls enter the Password");
             return false;
         }
-        if (stdPassword.length() < 6) {
+        if (teacherPassword.length() < 4) {
             pwErrorText.setText("Password must be at least 6 characters long");
             return false;
         }
         //checking whether the teacher id is correct
         if (!isTeacherIdValid(teacherID)){
-            TidErrorText.setText("Invalid id entered, pls re try");
-        return false ;
+            TidErrorText.setText("already exists");
+            return false ;
         }
         return true;
     }
-
+//==========================================================================================
     //the method to save the new TEACHER to the database
 
     public void stageLoader(ActionEvent event, String fileName) throws IOException {
@@ -188,19 +188,20 @@ public class HelloController {
         stage.setScene(scene);
         stage.show();
     }
-
+    //==========================================================================================
     @FXML
-    public void backToLoginPage(ActionEvent event) {
+    public void backToLoginPage(ActionEvent event) throws IOException {
         System.out.println("heelo");
-    }
 
+    }
+    //==========================================================================================
     @FXML
     public void onRequestToJoinButtonClick(ActionEvent event) throws Exception {
-
+        connections = getConnection();
         teacherID =  TeacherIdTextField.getText();
-        advisorFName = stdFirstNameTextField.getText();
-        advisorLName = stdLastNameTextField.getText();
-        stdPassword = stdPasswordTextField.getText();
+        teacherFName = stdFirstNameTextField.getText();
+        teacherLName = stdLastNameTextField.getText();
+        teacherPassword = stdPasswordTextField.getText();
         subjects = stdIdTextField.getText();
 
         for (String subjectName : subjects.split(" ")) {
@@ -209,65 +210,86 @@ public class HelloController {
         }
 
         // Validation done
-        if (advisorInputValidator()) {
+        if (teacherInputValidator()) {
             // Finally creating the object
-            Teacher teacher = new Teacher(teacherID, advisorFName, advisorLName, subjectsNeeded, stdPassword);
+            Teacher teacher = new Teacher(teacherID, teacherFName, teacherLName, subjectsNeeded, teacherPassword);
             savingNewTeacher(teacher);
             System.out.println("Teacher saved successfully.");
-
+            stageLoader(event, "Fxml Files/MainLoginPage.fxml");
             TidErrorText.setText("");
             pwErrorText.setText("");
             lNameErrorText.setText("");
             fNameErrorText.setText("");
         }
     }
-
+    //==========================================================================================
     @FXML
-    public void Login(ActionEvent event) throws SQLException {
+    public void Login(ActionEvent event) throws SQLException, IOException {
         connections = getConnection();
         System.out.println("heelo");
-    }
+        teacherID = teacherIdTextField.getText();
+        teacherPassword = passwordTextField.getText();
 
-
-
-    @FXML
-    public void onRegisterButtonClick(ActionEvent event) throws IOException {
-        stageLoader(event, "teacherSignUp.fxml");
-    }
-
-    public boolean isTeacherValid(String stdId, String stdPassword) throws Exception{
-        Statement st = connections.createStatement();
-        String query = "select * from student where id = '"+stdId+"'";
-        ResultSet rs = st.executeQuery(query);
-        while(rs.next()){
-            if(stdPassword.equals(rs.getString("password"))){
-                return true;
-            }
+        if (isLoginValid(teacherID, teacherPassword)){  //1.1.  calling the method to check student validity
+            stageLoader(event, "Fxml Files/teacherSignUp.fxml");
         }
-        return false;
-    }
+        stdNameErrorText.setText("Incorrect Teacher ID/ Password");
 
+
+    }
+    //==========================================================================================
+    @FXML
+    public void onRegisterButtonClick(ActionEvent event) throws IOException, SQLException {
+        stageLoader(event, "Fxml Files/teacherSignUp.fxml");
+        connections = getConnection();
+
+    }
+//==========================================================================================
     public void savingNewTeacher(Teacher teacher) throws SQLException {
         String insertTeacherQuery = "INSERT INTO teachers (teacher_id, fname, lname, password) VALUES (?, ?, ?, ?)";
+        String insertSubjectQuery = "INSERT INTO subjects (name, teacher_id) VALUES (?, ?)";
 
-        try (PreparedStatement insertTeacherStatement = this.connections.prepareStatement(insertTeacherQuery)) {
+        try (PreparedStatement insertTeacherStatement = this.connections.prepareStatement(insertTeacherQuery);
+             PreparedStatement insertSubjectStatement = this.connections.prepareStatement(insertSubjectQuery)) {
+
+            // Insert teacher details
             insertTeacherStatement.setString(1, teacher.getTeacherId());
             insertTeacherStatement.setString(2, teacher.getFname());
             insertTeacherStatement.setString(3, teacher.getLname());
             insertTeacherStatement.setString(4, teacher.getPassword());
-
             insertTeacherStatement.executeUpdate();
+
+            // Insert subjects
+            for (Subject subject : teacher.getSubjects()) {
+                insertSubjectStatement.setString(1, subject.getName());
+                insertSubjectStatement.setString(2, teacher.getTeacherId());
+                insertSubjectStatement.executeUpdate();
+            }
+
+            System.out.println("Teacher and subjects saved successfully.");
         }
     }
 
+    public boolean isLoginValid(String teacherId, String password) throws SQLException {
+        String query = "SELECT * FROM teachers WHERE teacher_id = ? AND password = ?";
+
+        try (PreparedStatement statement = connections.prepareStatement(query)) {
+            statement.setString(1, teacherId);
+            statement.setString(2, password);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next(); // Returns true if the combination is valid, false otherwise
+            }
+        }
+    }
     public boolean isTeacherIdValid(String teacherId) throws SQLException {
-        String query = "SELECT * FROM Teacher WHERE teacherId = ?";
+        String query = "SELECT * FROM teachers WHERE teacher_id = ?";
 
         try (PreparedStatement statement = connections.prepareStatement(query)) {
             statement.setString(1, teacherId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next(); // Returns true if the teacher ID exists, false otherwise
+                return !resultSet.next(); // Returns true if the teacher ID does not exist, false otherwise
             }
         }
     }

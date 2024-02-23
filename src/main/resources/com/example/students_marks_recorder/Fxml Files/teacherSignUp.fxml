@@ -9,8 +9,8 @@
 <?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Text?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.students_marks_recorder.HelloController">
-   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.students_marks_recorder.HelloController">
+    <children>
        <Ellipse fx:id="ellipseOne" layoutX="260.0" layoutY="788.0" radiusX="323.0" radiusY="130.0" stroke="BLACK" strokeType="INSIDE" />
        <Ellipse fx:id="ellipseTwo" layoutX="886.0" layoutY="1011.0" radiusX="540.0" radiusY="424.0" stroke="BLACK" strokeType="INSIDE" />
        <AnchorPane layoutX="87.0" layoutY="149.0" prefHeight="420.0" prefWidth="377.0">
@@ -44,7 +44,7 @@
        </AnchorPane>
       <AnchorPane fx:id="content" layoutX="501.0" layoutY="87.0" prefHeight="458.0" prefWidth="381.0">
          <children>
-            <Text fx:id="titleText" layoutX="36.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register to SCMS" textAlignment="CENTER" wrappingWidth="299.18603515625">
+            <Text fx:id="titleText" layoutX="36.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration" textAlignment="CENTER" wrappingWidth="299.18603515625">
       </Text>
             <Text fx:id="1" layoutX="61.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name:" />
             <TextField fx:id="stdFirstNameTextField" layoutX="139.0" layoutY="213.0" promptText="Your Name" />
@@ -68,7 +68,7 @@
       </AnchorPane>
    </children>
    <stylesheets>
-      <URL value="@../styling%20sheets/ClubAdvisorSignUp.css" />
       <URL value="@../styling%20sheets/rootStyles.css" />
+      <URL value="@../styling%20sheets/ClubAdvisorSignUp.css" />
    </stylesheets>
-</fx:root>
+</AnchorPane>
