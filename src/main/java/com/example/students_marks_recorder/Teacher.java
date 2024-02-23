@@ -80,37 +80,6 @@ public class Teacher {
         this.students = students;
     }
 
-    // Method to add a mark to a student's subject
-    public void addMark(int studentID, String subjectName, String examDate, String examType, int mark) {
-        for (Student student : students) {
-            if (student.getAdmissionNumber() == studentID) {
-                student.addMark(subjectName, examDate, examType, mark);
-                return;
-            }
-        }
-        System.out.println("Student with ID " + studentID + " not found.");
-    }
 
-    // Method to update an existing mark
-    public void updateMark(int studentID, String subjectName, String examDate, String examType, int newMark) {
-        for (Student student : students) {
-            if (student.getAdmissionNumber() == studentID) {
-                student.updateMark(subjectName, examDate, examType, newMark);
-                return;
-            }
-        }
-        System.out.println("Student with ID " + studentID + " not found.");
-    }
-
-    // Method to view a student's results
-    public void viewStudentResults(int studentID) {
-        for (Student student : students) {
-            if (student.getAdmissionNumber() == studentID) {
-                student.printStudentResults();
-                return;
-            }
-        }
-        System.out.println("Student with ID " + studentID + " not found.");
-    }
 }
 

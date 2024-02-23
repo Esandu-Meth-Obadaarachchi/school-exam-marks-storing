@@ -56,10 +56,10 @@
             <Label layoutX="29.0" layoutY="369.0" prefHeight="29.0" prefWidth="253.0" text="Enter Admission number of student :" />
             <TextField fx:id="newAdvisorId11" layoutX="270.0" layoutY="417.0" prefHeight="39.0" prefWidth="223.0" promptText="Marks" />
             <Label layoutX="29.0" layoutY="422.0" prefHeight="29.0" prefWidth="253.0" text="Enter the Marks :" />
-            <ComboBox fx:id="examComboBox" layoutX="304.0" layoutY="235.0" prefHeight="25.0" prefWidth="163.0" />
-            <ComboBox fx:id="subjectComboBox1" layoutX="304.0" layoutY="298.0" prefHeight="25.0" prefWidth="163.0" />
-            <Label layoutX="24.0" layoutY="233.0" prefHeight="29.0" prefWidth="253.0" text="Select the Exam" />
-            <Label layoutX="24.0" layoutY="296.0" prefHeight="29.0" prefWidth="253.0" text="Select the Subject" />
+            <ComboBox fx:id="examComboBox" layoutX="310.0" layoutY="300.0" prefHeight="25.0" prefWidth="163.0" />
+            <Label layoutX="24.0" layoutY="298.0" prefHeight="29.0" prefWidth="253.0" text="Select the Exam" />
+            <Label layoutX="24.0" layoutY="233.0" prefHeight="29.0" prefWidth="253.0" text="Select the Subject" />
+            <ComboBox fx:id="subjectComboBox1" layoutX="310.0" layoutY="235.0" prefHeight="25.0" prefWidth="163.0" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="207.0" fitWidth="230.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

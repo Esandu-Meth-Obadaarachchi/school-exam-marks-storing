@@ -1,11 +1,12 @@
 package com.example.students_marks_recorder;
 
-class Marks {
+public class Exam {
+    private int exam_id;
     private String examType;
     private String examDate;
     private int mark;
-
-    public Marks(String examType, String examDate, int mark) {
+    public Exam(int exam_id, String examType, String examDate,int mark) {
+        this.exam_id=exam_id;
         this.examType = examType;
         this.examDate = examDate;
         this.mark = mark;

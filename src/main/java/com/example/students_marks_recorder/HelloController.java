@@ -177,7 +177,7 @@ public class HelloController {
     private TextField newAdvisorId11;
 
     @FXML
-    private ComboBox<?> subjectComboBox1;
+    private ComboBox subjectComboBox1;
 
     @FXML
     private Button updateMarksButton;
@@ -192,6 +192,10 @@ public class HelloController {
     String teacherLName;
     String teacherPassword;
     String fileName;
+
+    ArrayList allSubjects;
+    ArrayList allExams;
+    ArrayList<String> subsName;
     Stage stage;
     //==========================================================================================
     public boolean isInputNotNull(String input){
@@ -287,6 +291,7 @@ public class HelloController {
 
         if (isLoginValid(teacherID, teacherPassword)){  //1.1.  calling the method to check student validity
             stageLoader(event, "Fxml Files/PressClub.fxml");
+            setSubjectsComboBox();
         }
         stdNameErrorText.setText("Incorrect Teacher ID/ Password");
 
@@ -349,21 +354,97 @@ public class HelloController {
         }
     }
 
-    public void setClubsComboBox() {
-        try {
-            Statement st = connections.createStatement();
-            // Get the clubs that the student has not joined
-            String clubsNotJoinedQuery = "SELECT * FROM club WHERE clubId NOT IN (SELECT clubId FROM club_student WHERE id = '" + stdId + "')";
-            ResultSet clubsNotJoined = st.executeQuery(clubsNotJoinedQuery);
-
-            while (clubsNotJoined.next()) {
-                clubs.add(clubsNotJoined.getString("name"));
+    public void setSubjectsComboBox() {
+        System.out.println(teacherID);
+        allSubjects = getSubjectsByTeacherId(teacherID);
+        for (Object obj : allSubjects) {
+            if (obj instanceof Subject) {
+                System.out.println(((Subject) obj).getName());
+                subsName.add(((Subject) obj).getName());
             }
-            clubComboBox.getItems().addAll(clubs);  //2.1.1.2 calling the getItems().addAll(clubs) method
+        }
+        try {
+            allSubjects = getSubjectsByTeacherId(teacherID);
+            subjectComboBox1.getItems().addAll(subsName);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<Student> getStudents() throws SQLException {
+        ArrayList<Student> students = new ArrayList<>();
+        String query = "SELECT * FROM students";
+        allSubjects = getSubjectsByTeacherId(teacherID);
+
+        try (PreparedStatement statement = connections.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                // Retrieve student details from the result set
+                int admissionNumber = resultSet.getInt("admission_number");
+                String fname = resultSet.getString("fname");
+                String lname = resultSet.getString("lname");
+                String grade = resultSet.getString("grade");
+
+                // Create a Student object with the retrieved data
+                Student student = new Student(fname, lname, admissionNumber, grade, new ArrayList<>()); // Assuming Student constructor accepts fname, lname, admissionNumber, grade, and an empty ArrayList of subjects
+                students.add(student);
+            }
+        }
+
+        return students;
+    }
+
+    // Retrieve subjects by teacher_id
+    public ArrayList<Subject> getSubjectsByTeacherId(String teacherId) {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        String query = "SELECT * FROM subjects WHERE teacher_id = ?";
+
+        try (PreparedStatement statement = connections.prepareStatement(query)) {
+            statement.setString(1, teacherId);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                // Retrieve subject details from the result set
+                String name = resultSet.getString("name");
+                String grade = resultSet.getString("grade");
+
+                // Retrieve exams for the current subject
+                ArrayList<Exam> exams = getExamsForSubject(name); // Assuming you have a method to get exams by subject name
+
+                // Create a Subject object with the retrieved data and exams
+                Subject subject = new Subject(name, exams,grade); // Assuming Subject constructor accepts name, grade, and exams
+                subjects.add(subject);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception
+        }
+
+        return subjects;
+    }
+    // Method to retrieve exams for a given subject name
+    private ArrayList<Exam> getExamsForSubject(String subjectName) throws SQLException {
+        ArrayList<Exam> exams = new ArrayList<>();
+        String query = "SELECT * FROM exams WHERE subject_name = ?";
+
+        try (PreparedStatement statement = connections.prepareStatement(query)) {
+            statement.setString(1, subjectName);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                // Retrieve exam details from the result set
+                int examId = resultSet.getInt("exam_id");
+                String examType = resultSet.getString("exam_type");
+                String examDate = resultSet.getString("exam_date");
+                int mark = resultSet.getInt("mark");
+
+                // Create an Exam object with the retrieved data
+                Exam exam = new Exam(examId, examType, examDate, mark); // Assuming Exam constructor accepts examId, examType, examDate, and mark
+                exams.add(exam);
+            }
+        }
+        return exams;
     }
 
     @FXML
