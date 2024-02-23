@@ -1,0 +1,83 @@
+/* styles.css */
+
+.button {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: #4B30B5;
+}
+
+#fillTable {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;  /* Make text bold */
+    -fx-underline: true;  /* Remove underline */
+}
+
+
+
+.text-field {
+    -fx-background-color: #181818;
+    -fx-text-fill: white;
+}
+
+.Text {
+    -fx-fill: white;
+}
+
+#welcomeClub {
+    -fx-text-fill: white;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+
+
+
+#contentOne {
+-fx-background-color: #282828;
+   }
+
+#contentTwo {
+-fx-background-color: #282828;
+   }
+
+
+#onComingEvents {
+    -fx-background-color: #181818;
+}
+
+#onComingEvents .column-header, #onComingEvents .column-header-background {
+    -fx-background-color: #181818;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+
+#onComingEvents .table-cell {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+}
+
+#onComingEvents .table-row-cell:odd {
+    -fx-background-color: #181818; /* Set the background color for odd rows */
+}
+
+#onComingEvents .table-row-cell:even {
+    -fx-background-color: #181818; /* Set the background color for even rows */
+}
+
+
+#onComingEvents .table-row-cell:odd .table-cell {
+    -fx-border-color: #282828 transparent #282828 transparent; /* Set the top border color for odd rows */
+}
+
+#onComingEvents .table-row-cell:even .table-cell {
+    -fx-border-color:  #282828 transparent #282828 transparent; /* Set the top border color for even rows */
+}
+
