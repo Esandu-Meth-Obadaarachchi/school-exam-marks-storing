@@ -68,7 +68,7 @@
       </AnchorPane>
    </children>
    <stylesheets>
-      <URL value="@../styling sheets/ClubAdvisorSignUp.css" />
-      <URL value="@../styling sheets/rootStyles.css" />
+      <URL value="@../styling%20sheets/ClubAdvisorSignUp.css" />
+      <URL value="@../styling%20sheets/rootStyles.css" />
    </stylesheets>
 </fx:root>

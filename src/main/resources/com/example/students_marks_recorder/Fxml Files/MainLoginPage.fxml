@@ -58,7 +58,7 @@
       </AnchorPane>
    </children>
    <stylesheets>
-      <URL value="@../styling sheets/MainLoginPage.css" />
-      <URL value="@../styling sheets/rootStyles.css" />
+      <URL value="@../styling%20sheets/MainLoginPage.css" />
+      <URL value="@../styling%20sheets/rootStyles.css" />
    </stylesheets>
 </AnchorPane>

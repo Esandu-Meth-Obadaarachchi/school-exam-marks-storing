@@ -32,14 +32,46 @@ public class Teacher {
 
     // Getters and setters
 
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
 
-    public String getName() {
+    public void setFname(String fname) {
+        Fname = fname;
+    }
+
+    public void setLname(String lname) {
+        Lname = lname;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public String getFname() {
         return Fname;
     }
 
-    public void setName(String name) {
-        this.Fname = name;
+    public String getLname() {
+        return Lname;
     }
+
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public List<Student> getStudents() {
         return students;
     }
