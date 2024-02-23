@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
@@ -130,6 +128,63 @@ public class HelloController {
 
     @FXML
     private TextField stdPasswordTextField;
+    @FXML
+    private Button addMarks;
+
+    @FXML
+    private Button addNewExamButton;
+
+    @FXML
+    private Button addNewSubjectButton;
+
+    @FXML
+    private Button addStudentsButton;
+
+    @FXML
+    private Button backButtonCDD;
+
+    @FXML
+    private TextField confirmText;
+
+    @FXML
+    private TextField confirmText1;
+
+    @FXML
+    private AnchorPane contentOne;
+
+    @FXML
+    private AnchorPane contentTwo;
+
+    @FXML
+    private Label deletingStatus;
+
+    @FXML
+    private Label deletingStatus1;
+
+    @FXML
+    private ComboBox<?> examComboBox;
+
+    @FXML
+    private Button generateReportsButton;
+
+    @FXML
+    private TextField newAdvisorId;
+
+    @FXML
+    private TextField newAdvisorId1;
+
+    @FXML
+    private TextField newAdvisorId11;
+
+    @FXML
+    private ComboBox<?> subjectComboBox1;
+
+    @FXML
+    private Button updateMarksButton;
+
+    @FXML
+    private Label welcomeClub;
+    //==========================================================================================
     String subjects ;
     ArrayList<Subject> subjectsNeeded = new ArrayList<>();
     String teacherID;
@@ -231,7 +286,7 @@ public class HelloController {
         teacherPassword = passwordTextField.getText();
 
         if (isLoginValid(teacherID, teacherPassword)){  //1.1.  calling the method to check student validity
-            stageLoader(event, "Fxml Files/teacherSignUp.fxml");
+            stageLoader(event, "Fxml Files/PressClub.fxml");
         }
         stdNameErrorText.setText("Incorrect Teacher ID/ Password");
 
@@ -293,4 +348,57 @@ public class HelloController {
             }
         }
     }
+
+    public void setClubsComboBox() {
+        try {
+            Statement st = connections.createStatement();
+            // Get the clubs that the student has not joined
+            String clubsNotJoinedQuery = "SELECT * FROM club WHERE clubId NOT IN (SELECT clubId FROM club_student WHERE id = '" + stdId + "')";
+            ResultSet clubsNotJoined = st.executeQuery(clubsNotJoinedQuery);
+
+            while (clubsNotJoined.next()) {
+                clubs.add(clubsNotJoined.getString("name"));
+            }
+            clubComboBox.getItems().addAll(clubs);  //2.1.1.2 calling the getItems().addAll(clubs) method
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void addMarksClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addNewExamButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addNewSubjectButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addStudentsButtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void backButtonCDD(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onGenerateReportButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateMarksButtonClick(ActionEvent event) {
+
+    }
+
 }

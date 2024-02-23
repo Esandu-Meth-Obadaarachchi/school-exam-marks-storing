@@ -15,7 +15,7 @@
 
             <AnchorPane fx:id="contentOne" layoutX="14.0" layoutY="221.0" prefHeight="367.0" prefWidth="318.0">
          <children>
-            <Button fx:id="deleteClub" layoutX="48.0" layoutY="243.0" mnemonicParsing="false" onAction="#onAssignNewAdvClick" prefHeight="39.0" prefWidth="223.0" text="ADD" />
+            <Button fx:id="addNewExamButton" layoutX="48.0" layoutY="243.0" mnemonicParsing="false" onAction="#addNewExamButtonClick" prefHeight="39.0" prefWidth="223.0" text="ADD" />
             <Label layoutX="38.0" layoutY="103.0" prefHeight="29.0" prefWidth="111.0" text="Date">
                     
                   </Label>
@@ -40,18 +40,18 @@
          <children>
             <AnchorPane layoutX="17.0" prefHeight="216.0" prefWidth="529.0">
                <children>
-                  <Button fx:id="veiwStudentsButton" layoutX="30.0" layoutY="77.0" mnemonicParsing="false" onAction="#onViewStudentsButtonClick" prefHeight="39.0" prefWidth="223.0" text="ADD new Student" />
-                  <Button fx:id="removeStudent" layoutX="323.0" layoutY="77.0" mnemonicParsing="false" onAction="#onRemoveStudentClick" prefHeight="39.0" prefWidth="223.0" text="UPDATE A MARK" />
+                  <Button fx:id="addStudentsButton" layoutX="30.0" layoutY="77.0" mnemonicParsing="false" onAction="#addStudentsButtonClick" prefHeight="39.0" prefWidth="223.0" text="ADD new Student" />
+                  <Button fx:id="updateMarksButton" layoutX="323.0" layoutY="77.0" mnemonicParsing="false" onAction="#updateMarksButtonClick" prefHeight="39.0" prefWidth="223.0" text="UPDATE A MARK" />
                   <Button fx:id="generateReportsButton" layoutX="323.0" layoutY="141.0" mnemonicParsing="false" onAction="#onGenerateReportButtonClicked" prefHeight="39.0" prefWidth="223.0" text="Generate Reports" />
                   <Label fx:id="welcomeClub" alignment="CENTER" layoutX="39.0" layoutY="14.0" prefHeight="36.0" prefWidth="546.0" text="Welcome! Enter stu.id to enter marks">
                      <font>
                         <Font size="10.0" />
                      </font></Label>
                   <Button fx:id="backButtonCDD" layoutX="-10.0" layoutY="21.0" mnemonicParsing="false" onAction="#backButtonCDD" prefHeight="26.0" prefWidth="40.0" text="&lt;--" />
-                  <Button fx:id="generateReportsButton1" layoutX="30.0" layoutY="143.0" mnemonicParsing="false" onAction="#onGenerateReportButtonClicked" prefHeight="39.0" prefWidth="223.0" text="Add New Subject to Teacher" />
+                  <Button fx:id="addNewSubjectButton" layoutX="30.0" layoutY="143.0" mnemonicParsing="false" onAction="#addNewSubjectButtonClick" prefHeight="39.0" prefWidth="223.0" text="Add New Subject to Teacher" />
                </children>
             </AnchorPane>
-            <Button fx:id="veiwStudentsButton1" layoutX="194.0" layoutY="476.0" mnemonicParsing="false" onAction="#onViewStudentsButtonClick" prefHeight="39.0" prefWidth="223.0" text="ADD Marks" />
+            <Button fx:id="addMarks" layoutX="194.0" layoutY="476.0" mnemonicParsing="false" onAction="#addMarksClick" prefHeight="39.0" prefWidth="223.0" text="ADD Marks" />
             <TextField fx:id="newAdvisorId1" layoutX="270.0" layoutY="364.0" prefHeight="39.0" prefWidth="223.0" promptText="Admission number" />
             <Label layoutX="29.0" layoutY="369.0" prefHeight="29.0" prefWidth="253.0" text="Enter Admission number of student :" />
             <TextField fx:id="newAdvisorId11" layoutX="270.0" layoutY="417.0" prefHeight="39.0" prefWidth="223.0" promptText="Marks" />
@@ -62,7 +62,7 @@
             <Label layoutX="24.0" layoutY="296.0" prefHeight="29.0" prefWidth="253.0" text="Select the Subject" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="207.0" fitWidth="230.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="207.0" fitWidth="230.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/5.png" />
          </image>
