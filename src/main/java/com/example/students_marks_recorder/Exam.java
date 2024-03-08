@@ -4,12 +4,12 @@ public class Exam {
     private int exam_id;
     private String examType;
     private String examDate;
-    private int mark;
-    public Exam(int exam_id, String examType, String examDate,int mark) {
+
+    public Exam(int exam_id, String examType, String examDate) {
         this.exam_id=exam_id;
         this.examType = examType;
         this.examDate = examDate;
-        this.mark = mark;
+
     }
 
     // Getters and setters
@@ -29,12 +29,5 @@ public class Exam {
         this.examDate = examDate;
     }
 
-    public int getMark() {
-        return mark;
-    }
-
-    public void setMark(int mark) {
-        this.mark = mark;
-    }
 }
 

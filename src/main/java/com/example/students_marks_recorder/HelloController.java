@@ -1,8 +1,12 @@
 package com.example.students_marks_recorder;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,8 +17,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class HelloController {
     // JDBC URL, username, and password of MySQL server
@@ -57,6 +63,12 @@ public class HelloController {
     private Connection connections;
     @FXML
     private Button RegisterButton;
+
+    @FXML
+    private TextField exam;
+
+    @FXML
+    private TextField subject;
     @FXML
     private Ellipse ellipseTwo;
 
@@ -130,6 +142,14 @@ public class HelloController {
     private TextField stdPasswordTextField;
     @FXML
     private Button addMarks;
+    @FXML
+    private TextField examDateField;
+
+    @FXML
+    private TextField examNameField;
+
+    @FXML
+    private TextField examTimeField;
 
     @FXML
     private Button addNewExamButton;
@@ -198,6 +218,25 @@ public class HelloController {
     ArrayList<String> subsName;
     Stage stage;
     //==========================================================================================
+
+//==========================================================================================
+    //the method to save the new TEACHER to the database
+
+    public void stageLoader(ActionEvent event, String fileName) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fileName));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    //==========================================================================================
+    //SIGNUP PAGE STUFF
+    @FXML
+    public void backToLoginPage(ActionEvent event) throws IOException {
+        System.out.println("heelo");
+
+    }
+
     public boolean isInputNotNull(String input){
         if ( input== null || input.equals("")){
             return false;
@@ -237,22 +276,6 @@ public class HelloController {
         }
         return true;
     }
-//==========================================================================================
-    //the method to save the new TEACHER to the database
-
-    public void stageLoader(ActionEvent event, String fileName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fileName));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    //==========================================================================================
-    @FXML
-    public void backToLoginPage(ActionEvent event) throws IOException {
-        System.out.println("heelo");
-
-    }
     //==========================================================================================
     @FXML
     public void onRequestToJoinButtonClick(ActionEvent event) throws Exception {
@@ -281,30 +304,13 @@ public class HelloController {
             fNameErrorText.setText("");
         }
     }
-    //==========================================================================================
-    @FXML
-    public void Login(ActionEvent event) throws SQLException, IOException {
-        connections = getConnection();
-        System.out.println("heelo");
-        teacherID = teacherIdTextField.getText();
-        teacherPassword = passwordTextField.getText();
 
-        if (isLoginValid(teacherID, teacherPassword)){  //1.1.  calling the method to check student validity
-            stageLoader(event, "Fxml Files/PressClub.fxml");
-            setSubjectsComboBox();
-        }
-        stdNameErrorText.setText("Incorrect Teacher ID/ Password");
-
-
-    }
-    //==========================================================================================
     @FXML
     public void onRegisterButtonClick(ActionEvent event) throws IOException, SQLException {
         stageLoader(event, "Fxml Files/teacherSignUp.fxml");
         connections = getConnection();
 
     }
-//==========================================================================================
     public void savingNewTeacher(Teacher teacher) throws SQLException {
         String insertTeacherQuery = "INSERT INTO teachers (teacher_id, fname, lname, password) VALUES (?, ?, ?, ?)";
         String insertSubjectQuery = "INSERT INTO subjects (name, teacher_id) VALUES (?, ?)";
@@ -330,18 +336,7 @@ public class HelloController {
         }
     }
 
-    public boolean isLoginValid(String teacherId, String password) throws SQLException {
-        String query = "SELECT * FROM teachers WHERE teacher_id = ? AND password = ?";
 
-        try (PreparedStatement statement = connections.prepareStatement(query)) {
-            statement.setString(1, teacherId);
-            statement.setString(2, password);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                return resultSet.next(); // Returns true if the combination is valid, false otherwise
-            }
-        }
-    }
     public boolean isTeacherIdValid(String teacherId) throws SQLException {
         String query = "SELECT * FROM teachers WHERE teacher_id = ?";
 
@@ -354,131 +349,80 @@ public class HelloController {
         }
     }
 
-    public void setSubjectsComboBox() {
-        System.out.println(teacherID);
-        allSubjects = getSubjectsByTeacherId(teacherID);
-        for (Object obj : allSubjects) {
-            if (obj instanceof Subject) {
-                System.out.println(((Subject) obj).getName());
-                subsName.add(((Subject) obj).getName());
-            }
+    //==========================================================================================
+    //LOGIN STUFF
+    @FXML
+    public void Login(ActionEvent event) throws SQLException, IOException {
+        connections = getConnection();
+        System.out.println("heelo");
+        teacherID = teacherIdTextField.getText();
+        teacherPassword = passwordTextField.getText();
+
+        if (isLoginValid(teacherID, teacherPassword)){  //1.1.  calling the method to check student validity
+            stageLoader(event, "Fxml Files/PressClub.fxml");
+
         }
-        try {
-            allSubjects = getSubjectsByTeacherId(teacherID);
-            subjectComboBox1.getItems().addAll(subsName);
+        stdNameErrorText.setText("Incorrect Teacher ID/ Password");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public ArrayList<Student> getStudents() throws SQLException {
-        ArrayList<Student> students = new ArrayList<>();
-        String query = "SELECT * FROM students";
-        allSubjects = getSubjectsByTeacherId(teacherID);
-
-        try (PreparedStatement statement = connections.prepareStatement(query)) {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                // Retrieve student details from the result set
-                int admissionNumber = resultSet.getInt("admission_number");
-                String fname = resultSet.getString("fname");
-                String lname = resultSet.getString("lname");
-                String grade = resultSet.getString("grade");
-
-                // Create a Student object with the retrieved data
-                Student student = new Student(fname, lname, admissionNumber, grade, new ArrayList<>()); // Assuming Student constructor accepts fname, lname, admissionNumber, grade, and an empty ArrayList of subjects
-                students.add(student);
-            }
-        }
-
-        return students;
     }
 
-    // Retrieve subjects by teacher_id
-    public ArrayList<Subject> getSubjectsByTeacherId(String teacherId) {
-        ArrayList<Subject> subjects = new ArrayList<>();
-        String query = "SELECT * FROM subjects WHERE teacher_id = ?";
+    public boolean isLoginValid(String teacherId, String password) throws SQLException {
+        String query = "SELECT * FROM teachers WHERE teacher_id = ? AND password = ?";
 
         try (PreparedStatement statement = connections.prepareStatement(query)) {
             statement.setString(1, teacherId);
-            ResultSet resultSet = statement.executeQuery();
+            statement.setString(2, password);
 
-            while (resultSet.next()) {
-                // Retrieve subject details from the result set
-                String name = resultSet.getString("name");
-                String grade = resultSet.getString("grade");
-
-                // Retrieve exams for the current subject
-                ArrayList<Exam> exams = getExamsForSubject(name); // Assuming you have a method to get exams by subject name
-
-                // Create a Subject object with the retrieved data and exams
-                Subject subject = new Subject(name, exams,grade); // Assuming Subject constructor accepts name, grade, and exams
-                subjects.add(subject);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle the exception
-        }
-
-        return subjects;
-    }
-    // Method to retrieve exams for a given subject name
-    private ArrayList<Exam> getExamsForSubject(String subjectName) throws SQLException {
-        ArrayList<Exam> exams = new ArrayList<>();
-        String query = "SELECT * FROM exams WHERE subject_name = ?";
-
-        try (PreparedStatement statement = connections.prepareStatement(query)) {
-            statement.setString(1, subjectName);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                // Retrieve exam details from the result set
-                int examId = resultSet.getInt("exam_id");
-                String examType = resultSet.getString("exam_type");
-                String examDate = resultSet.getString("exam_date");
-                int mark = resultSet.getInt("mark");
-
-                // Create an Exam object with the retrieved data
-                Exam exam = new Exam(examId, examType, examDate, mark); // Assuming Exam constructor accepts examId, examType, examDate, and mark
-                exams.add(exam);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next(); // Returns true if the combination is valid, false otherwise
             }
         }
-        return exams;
     }
+    //==========================================================================================
+
+//==========================================================================================
+    public String examName;
+    public String examDate;
+    public String examTime;
 
     @FXML
-    void addMarksClick(ActionEvent event) {
+    public void addNewExamButtonClick(ActionEvent event) {
+        examName = examNameField.getText();
+        examDate = examDateField.getText();
+        examTime = examTimeField.getText();
 
-    }
-
-    @FXML
-    void addNewExamButtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addNewSubjectButtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addStudentsButtonClick(ActionEvent event) {
 
     }
 
     @FXML
-    void backButtonCDD(ActionEvent event) {
+    public void addMarksClick(ActionEvent event) {
+
+    }
+
+
+
+    @FXML
+    public void addNewSubjectButtonClick(ActionEvent event) {
 
     }
 
     @FXML
-    void onGenerateReportButtonClicked(ActionEvent event) {
+    public void addStudentsButtonClick(ActionEvent event) {
 
     }
 
     @FXML
-    void updateMarksButtonClick(ActionEvent event) {
+    public void backButtonCDD(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void onGenerateReportButtonClicked(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void updateMarksButtonClick(ActionEvent event) {
 
     }
 
